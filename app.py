@@ -14,10 +14,9 @@ import io
 import base64
 import shutil
 import os.path
-import cv2
 # Init server
 app = Flask('braces2teeth')
-app.config['UPLOAD_FOLDER'] = 'datasets\\test'
+app.config['UPLOAD_FOLDER'] = 'datasets'
 CORS(app)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
@@ -35,9 +34,11 @@ def predict():
     # Pre-processing
     if (path.exists('results')):
         shutil.rmtree('results')
-    if (path.exists('datasets\\test')):
-        shutil.rmtree('datasets\\test')
-    os.mkdir(os.path.join('datasets', 'test'))
+    if (path.exists('datasets')):
+        print(111111111111111)
+        shutil.rmtree('datasets')
+    
+    os.mkdir('datasets')
     uploadImage()
     # copyfile(request.form.get('file'), 'datasets\\test\\img.png')
     opt = TestOptions().parse()  # get test options
