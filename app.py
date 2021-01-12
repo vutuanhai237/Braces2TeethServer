@@ -14,6 +14,7 @@ import io
 import base64
 import shutil
 import os.path
+import time
 # Init server
 app = Flask('braces2teeth')
 app.config['UPLOAD_FOLDER'] = 'datasets'
@@ -26,6 +27,7 @@ def uploadImage():
     global fileName 
     fileName = f.filename[0:-4]
     f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
+    
     return
 
 
@@ -40,6 +42,7 @@ def predict():
     
     os.mkdir('datasets')
     uploadImage()
+    time.sleep(30)
     # copyfile(request.form.get('file'), 'datasets\\test\\img.png')
     opt = TestOptions().parse()  # get test options
     # hard-code some parameters for test
@@ -70,7 +73,7 @@ def predict():
         print('processing (%04d)-th image... %s' % (i, img_path))
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
     webpage.save()  # save the HTML
-    with open("results\\braces2teeth\\test_latest\\images\\" + fileName + "_fake.png", "rb") as img_file:
+    with open("results/braces2teeth/test_latest/images/" + fileName + "_fake.png", "rb") as img_file:
         my_string = base64.b64encode(img_file.read())
     return my_string
 if __name__ == '__main__':
