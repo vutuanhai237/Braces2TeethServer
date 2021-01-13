@@ -28,7 +28,7 @@
                no_dropout: True                          
                   no_flip: False                         
                      norm: instance                      
-                 num_test: 50                            
+                 num_test: 400                           
               num_threads: 4                             
                 output_nc: 3                             
                     phase: test                          
