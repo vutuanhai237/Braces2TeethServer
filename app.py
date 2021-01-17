@@ -75,16 +75,16 @@ def processVideo():
         shutil.rmtree('results', ignore_errors=True)
     if (path.exists('datasets')):
         shutil.rmtree('datasets', ignore_errors=True)
-    os.makedirs('datasets\\frames')
+    os.makedirs('datasets/frames')
     opt = uploadFile()
 
     # extract video
-    video = video2Images('datasets\\' + fileName + '.mp4', 'datasets\\frames')
-    centeringAndSave('datasets\\frames')
-    resizeAllFile('datasets\\frames')
+    video = video2Images('datasets/' + fileName + '.mp4', 'datasets/frames')
+    centeringAndSave('datasets/frames')
+    resizeAllFile('datasets/frames')
 
     # process
-    opt.dataroot = 'datasets\\frames'
+    opt.dataroot = 'datasets/frames'
     dataset = create_dataset(opt)
     model = create_model(opt) 
     model.setup(opt)
@@ -108,8 +108,8 @@ def processVideo():
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
     
     # concat each pair image
-    concatPairImage('results\\braces2teeth\\test_latest\\images\\', 'results')
-    images2Video('results\\concat', 30, fileName)
+    concatPairImage('results/braces2teeth/test_latest/images/', 'results')
+    images2Video('results/concat', 30, fileName)
     return "Hello"
 
 @app.route('/processvideo', methods=['GET'])

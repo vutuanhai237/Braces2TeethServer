@@ -9,7 +9,7 @@ def video2Images(pathOfVideo, folder):
     success, image = vidcap.read()
     count = 0
     while success:
-        cv2.imwrite(folder + '\\frame%d.png' % count, image)
+        cv2.imwrite(folder + '/frame%d.png' % count, image)
         success, image = vidcap.read()
         count += 1
 
@@ -44,9 +44,9 @@ def centeringAndSave(folder):
 def resizeAllFile(folder):
     dim = (256,256)
     for file in os.listdir(folder):
-        img = cv2.imread(folder + '\\' + file)
+        img = cv2.imread(folder + '/' + file)
         img = cv2.resize(img, dim, interpolation = cv2.INTER_CUBIC)
-        cv2.imwrite(folder + '\\' + file, img)
+        cv2.imwrite(folder + '/' + file, img)
 
 def getConcat(im1, im2):
     dst = Image.new('RGB', (im1.width + im2.width, im1.height))
@@ -56,9 +56,9 @@ def getConcat(im1, im2):
 
 def concatPairImage(folder, saveFolder):
     lists = glob.glob(folder + '/*.png')
-    if (path.exists('results\\concat')):
-        shutil.rmtree('results\\concat', ignore_errors=True)
-    os.makedirs(saveFolder + '\\concat')
+    if (path.exists('results/concat')):
+        shutil.rmtree('results/concat', ignore_errors=True)
+    os.makedirs(saveFolder + '/concat')
     subList = [lists[n:n+2] for n in range(0, len(lists), 2)]
     for files in subList:
         fake = Image.open(files[0])
@@ -71,7 +71,7 @@ def concatPairImage(folder, saveFolder):
             index = '0' + str(number)
         else:
             index = str(number)
-        getConcat(real, fake).save(saveFolder + '\\concat\\' + index + '.png')
+        getConcat(real, fake).save(saveFolder + '/concat/' + index + '.png')
 
 
 def images2Video(folder, FPS, videoName):
@@ -84,4 +84,4 @@ def images2Video(folder, FPS, videoName):
 
 
 
-
+concatPairImage('results/braces2teeth/test_latest/images/', 'results')
