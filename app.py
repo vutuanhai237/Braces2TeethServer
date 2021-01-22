@@ -2,7 +2,7 @@
 from options.test_options import TestOptions
 from data import create_dataset
 from models import create_model
-from videoProcess import video2Images, centeringAndSave, resizeAllFile, concatPairImage, images2Video
+from videoProcess import *
 from util.visualizer import save_images
 from util import html
 from PIL import Image
@@ -110,14 +110,19 @@ def processVideo():
     # concat each pair image
     concatPairImage('results/braces2teeth/test_latest/images/', 'results')
     images2Video('results/concat', 30, fileName)
+
+    # not concat and image2video
+    images2VideoNotConcat('results/not_concat', 30, fileName)
     return "Hello"
 
 @app.route('/processvideo', methods=['GET'])
 def getVideo():
     """Download a file."""
-    
     return send_from_directory('', 'video.mp4', as_attachment=True)
-
+@app.route('/processoriginvideo', methods=['GET'])
+def getVideo2():
+    """Download a file."""
+    return send_from_directory('', 'videoNotConcat.mp4', as_attachment=True)
 
 
 if __name__ == '__main__':

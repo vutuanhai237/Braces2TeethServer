@@ -58,7 +58,10 @@ def concatPairImage(folder, saveFolder):
     lists = glob.glob(folder + '/*.png')
     if (path.exists('results/concat')):
         shutil.rmtree('results/concat', ignore_errors=True)
+    if (path.exists('results/not_concat')):
+        shutil.rmtree('results/not_concat', ignore_errors=True)
     os.makedirs(saveFolder + '/concat')
+    os.makedirs(saveFolder + '/not_concat')
     subList = [lists[n:n+2] for n in range(0, len(lists), 2)]
     for files in subList:
         fake = Image.open(files[0])
@@ -72,7 +75,7 @@ def concatPairImage(folder, saveFolder):
         else:
             index = str(number)
         getConcat(real, fake).save(saveFolder + '/concat/' + index + '.png')
-
+        fake.save(saveFolder + '/not_concat/' + index + '.png')
 
 def images2Video(folder, FPS, videoName):
     image_folder = folder
@@ -82,6 +85,13 @@ def images2Video(folder, FPS, videoName):
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps = FPS)
     clip.write_videofile('video.mp4')
 
+def images2VideoNotConcat(folder, FPS, videoName):
+    image_folder = folder
+    image_files = [
+        image_folder + "/" + img for img in os.listdir(image_folder) if img.endswith(".png")
+    ]
+    clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps = FPS)
+    clip.write_videofile('videoNotConcat.mp4')
 
+# concatPairImage('results/braces2teeth/test_latest/images/', 'results')
 
-concatPairImage('results/braces2teeth/test_latest/images/', 'results')
