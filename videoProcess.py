@@ -77,7 +77,6 @@ def concatPairImage(folder, saveFolder):
             index = str(number)
 
         newSubList.append([index, real, fake])
-        newSubList.sort()
     for file in newSubList:
         print(file[0])
         getConcat(file[1], file[2]).save(saveFolder + '/concat/' + file[0] + '.png')
@@ -100,6 +99,6 @@ def images2VideoNotConcat(folder, FPS, videoName):
     clip.write_videofile('videoNotConcat.mp4')
 
 
-concatPairImage('results/braces2teeth/test_latest/images/', 'results')
+# concatPairImage('results/braces2teeth/test_latest/images/', 'results')
 
 # images2Video('results/concat', 30, 'a')
