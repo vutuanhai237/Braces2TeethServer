@@ -12,10 +12,12 @@ from flask_cors import CORS, cross_origin
 from os import path
 from shutil import copyfile
 import io, glob, base64, shutil, os.path, time
+from flask_ngrok import run_with_ngrok
 # Init server
 app = Flask('braces2teeth')
 app.config['UPLOAD_FOLDER'] = 'datasets'
 CORS(app)
+run_with_ngrok(app)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 fileName = ''
@@ -125,5 +127,4 @@ def getVideo2():
     return send_from_directory('', 'videoNotConcat.mp4', as_attachment=True)
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='6868')
+app.run()
