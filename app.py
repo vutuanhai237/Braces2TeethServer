@@ -3,6 +3,7 @@ from options.test_options import TestOptions
 from data import create_dataset
 from models import create_model
 from videoProcess import *
+from detectMouth import detect
 from util.visualizer import save_images
 from util import html
 from PIL import Image
@@ -17,7 +18,7 @@ from flask_ngrok import run_with_ngrok
 app = Flask('braces2teeth')
 app.config['UPLOAD_FOLDER'] = 'datasets'
 CORS(app)
-run_with_ngrok(app)
+# run_with_ngrok(app)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 fileName = ''
@@ -33,6 +34,8 @@ def uploadFile():
     opt.no_flip = True
     opt.display_id = -1
     return opt
+
+
 
 
 @app.route('/process', methods=['POST'])
@@ -125,6 +128,14 @@ def getVideo():
 def getVideo2():
     """Download a file."""
     return send_from_directory('', 'videoNotConcat.mp4', as_attachment=True)
-
+@app.route('/detectmouth', methods=['POST'])
+def detectMouth():
+    if (path.exists('datasets')):
+        shutil.rmtree('datasets')
+    os.mkdir('datasets')
+    uploadFile()
+    file = os.listdir('datasets')[0]
+    frame = cv2.imread('datasets' + '/' + file)
+    return detect(frame)
 
 app.run()
