@@ -15,4 +15,4 @@ def detect(frame):
         y = int(y - 0.15*h)
         cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0), 3)
     cv2.imwrite('results/result.png', frame)
-    return  '{} {} {} {}'.format(x, y, w, h)
+    return  '{} {} {} {} {} {}'.format(x, y, w, h, frame.shape[1], frame.shape[0])
